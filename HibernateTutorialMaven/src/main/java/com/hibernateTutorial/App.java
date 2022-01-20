@@ -1,6 +1,8 @@
 package com.hibernateTutorial;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 /**
@@ -17,7 +19,18 @@ public class App
         cfg.configure("hibernate.cfg.xml");
         SessionFactory factory = cfg.buildSessionFactory();
         
-        System.out.println(factory);
-        System.out.println(factory.isClosed());
+        Student st = new Student();
+        st.setId(107);
+        st.setName("Rajesh Tiwari");
+        st.setCity("Lucknow");
+        System.out.println(st);
+ 
+        Session session = factory.openSession();
+        Transaction tx = session.beginTransaction();
+        
+        session.save(st);
+        
+        tx.commit();
+        session.close();
     }
 }
